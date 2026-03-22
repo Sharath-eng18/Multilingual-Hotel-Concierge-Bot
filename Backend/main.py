@@ -16,11 +16,9 @@ app.add_middleware(
     allow_headers = ["*"],
 )
 
-# Configure Gemini API
 from dotenv import load_dotenv
 load_dotenv()
 
-# Assumes GEMINI_API_KEY is available in the environment variables
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
 system_instruction = """You are a multilingual hotel concierge bot.
