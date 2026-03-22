@@ -1,52 +1,103 @@
-# Multilingual Hotel Concierge Bot
+# 🏨 Multilingual Hotel Concierge Bot
 
-## Overview
-The Multilingual Hotel Concierge Bot is an innovative solution designed to enhance the guest experience in hotels by providing instant, automated responses in multiple languages. This bot serves as a virtual concierge, assisting guests with queries regarding hotel services, local attractions, booking management, and more.
-
-## Features
-- **Multi-language Support**: The bot understands and responds in various languages, making it accessible to a diverse range of guests.
-- **Instant Responses**: Guests receive immediate answers to their questions, improving satisfaction and efficiency.
-- **Integration with Hotel Services**: Seamlessly connects with hotel management systems to provide real-time information on room availability, dining options, and amenities.
-- **24/7 Availability**: Operates around the clock, ensuring that guests can receive assistance whenever needed.
-
-## Technologies Used
-- **Natural Language Processing (NLP)**: To understand and interpret guest inquiries accurately.
-- **Machine Learning**: Enables the bot to learn from interactions and improve responses over time.
-- **Cloud Integration**: Ensures that the bot can scale effectively and handle multiple requests simultaneously.
-
-## How to Use
-1. **Initialization**: Deploy the bot on the hotel’s website or mobile application.
-2. **Language Selection**: Guests can select their preferred language when interacting with the bot.
-3. **Engagement**: Guests can ask questions through a chat interface, and the bot will respond with relevant information or actions.
-
-## Installation
-To set up the bot locally, follow these steps:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Sharath-eng18/Multilingual-Hotel-Concierge-Bot.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd Multilingual-Hotel-Concierge-Bot
-   ```
-3. Install the required dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the application:
-   ```bash
-   npm start
-   ```
-
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-For further questions or feedback, feel free to contact the project maintainer at [your.email@example.com].
+A full-stack AI-powered virtual concierge that helps hotel guests get instant answers in their native language — covering hotel services, local recommendations, room bookings, and more.
 
 ---
 
-_Last updated on: 2026-02-27 21:25:13 (UTC)_
+## ✨ Features
+
+- 🌍 **Multilingual support** — understands and responds in multiple languages
+- ⚡ **Instant responses** — real-time chat with no waiting
+- 🔗 **Hotel system integration** — live info on room availability, dining, and amenities
+- 🕐 **24/7 availability** — always on, no staff required
+- 💬 **Conversational UI** — clean, accessible chat interface for guests
+
+---
+
+## 🗂️ Project Structure
+
+```
+Multilingual-Hotel-Concierge-Bot/
+├── Backend/        # Python server — NLP, language detection, response logic
+├── Frontend/       # HTML/CSS/JS — guest-facing chat interface
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer    | Technologies                  |
+|----------|-------------------------------|
+| Frontend | HTML, CSS, JavaScript         |
+| Backend  | Python                        |
+| NLP      | Language detection & translation |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (for frontend dependencies)
+- Python 3.8+
+- pip
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Sharath-eng18/Multilingual-Hotel-Concierge-Bot.git
+   cd Multilingual-Hotel-Concierge-Bot
+   ```
+
+2. **Set up the Backend**
+   ```bash
+   cd Backend
+   pip install -r requirements.txt
+   python app.py
+   ```
+
+3. **Set up the Frontend**
+   ```bash
+   cd Frontend
+   npm install
+   npm start
+   ```
+
+4. Open your browser and navigate to `http://localhost:3000`
+
+---
+
+## 💡 How It Works
+
+1. A guest opens the chat interface on the hotel's website or app
+2. They type a query in their preferred language
+3. The backend detects the language and processes the request using NLP
+4. A relevant response is returned in the same language
+5. For service requests (room service, bookings, etc.), the bot connects to the hotel management system
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add your feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 📬 Contact
+
+Have questions or suggestions? Open an issue on GitHub or reach out to the maintainer.
