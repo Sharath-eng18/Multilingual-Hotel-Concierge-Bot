@@ -41,9 +41,6 @@ To set up the bot locally, follow these steps:
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Contact
 For further questions or feedback, feel free to contact the project maintainer at [your.email@example.com].
 
