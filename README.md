@@ -56,7 +56,7 @@ Multilingual-Hotel-Concierge-Bot/
    ```bash
    cd Backend
    pip install -r requirements.txt
-   python app.py
+   python main.py
    ```
 
 3. **Set up the Frontend**
