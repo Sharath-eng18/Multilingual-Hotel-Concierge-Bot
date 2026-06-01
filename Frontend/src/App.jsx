@@ -14,8 +14,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState(null);
   const [bookings, setBookings] = useState([]);
-  const [mapData, setMapData] = useState(null);
-  const [placesData, setPlacesData] = useState(null);
   const [activeTab, setActiveTab] = useState("chat"); // 'chat' or 'bookings'
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -101,19 +99,15 @@ function App() {
         setBookings((prev) => [...prev, data.booking]);
       }
 
-      if (data.map_data) {
-        setMapData(data.map_data);
-      } else {
-        setMapData(null); // Clear previous map
-      }
+      const botMessage = {
+        text: data.reply,
+        isUser: false,
+        booking: data.booking || null,
+        mapData: data.map_data || null,
+        placesData: (data.places_data && data.places_data.length > 0) ? data.places_data : null,
+      };
 
-      if (data.places_data && data.places_data.length > 0) {
-        setPlacesData(data.places_data);
-      } else {
-        setPlacesData(null);
-      }
-
-      setMessages((prev) => [...prev, { text: data.reply, isUser: false }]);
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error(error);
       setMessages((prev) => [
@@ -277,82 +271,112 @@ function App() {
                         <div className="message-bubble">{msg.text}</div>
                       </div>
 
-                      {/* ONLY display places data on the VERY LAST bot message, if placesData exists */}
-                      {!msg.isUser &&
-                        index === messages.length - 1 &&
-                        placesData && (
-                          <div className="places-carousel">
-                            {placesData.map((place, pIdx) => (
-                              <div key={pIdx} className="place-card">
-                                <div className="place-header">
-                                  <h4>{place.name}</h4>
-                                  <span className="place-rating">
-                                    ⭐ {place.rating}
-                                  </span>
-                                </div>
-                                <span className="place-type">{place.type}</span>
-                                <p className="place-desc">
-                                  {place.description}
-                                </p>
-                                <p className="place-address">
-                                  📍 {place.address}
-                                </p>
-                                <button
-                                  className="directions-btn"
-                                  onClick={() =>
-                                    handleSend(
-                                      `Get directions to ${place.name} at ${place.address}`,
-                                    )
-                                  }
-                                >
-                                  🧭 Get Directions
-                                </button>
-                              </div>
-                            ))}
+                      {/* Display booking confirmation card if present on this message */}
+                      {!msg.isUser && msg.booking && (
+                        <div className="booking-confirm-card">
+                          <div className="booking-confirm-header">
+                            <span className="confirm-icon">🎉</span>
+                            <div className="confirm-header-text">
+                              <h4>Booking Confirmed!</h4>
+                              <span className="booking-id-tag">#{msg.booking.booking_id}</span>
+                            </div>
                           </div>
-                        )}
+                          <div className="booking-confirm-details">
+                            <div className="confirm-row">
+                              <span className="label">Service:</span>
+                              <span className="val">{msg.booking.service}</span>
+                            </div>
+                            <div className="confirm-row">
+                              <span className="label">Guest Name:</span>
+                              <span className="val">{msg.booking.name}</span>
+                            </div>
+                            <div className="confirm-row">
+                              <span className="label">Date & Time:</span>
+                              <span className="val">{msg.booking.date}</span>
+                            </div>
+                            <div className="confirm-row">
+                              <span className="label">Price:</span>
+                              <span className="val">{msg.booking.price}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Display places data if present on this message */}
+                      {!msg.isUser && msg.placesData && (
+                        <div className="places-carousel">
+                          {msg.placesData.map((place, pIdx) => (
+                            <div key={pIdx} className="place-card">
+                              <div className="place-header">
+                                <h4>{place.name}</h4>
+                                <span className="place-rating">
+                                  ⭐ {place.rating}
+                                </span>
+                              </div>
+                              <span className="place-type">{place.type}</span>
+                              <p className="place-desc">
+                                {place.description}
+                              </p>
+                              <p className="place-address">
+                                📍 {place.address}
+                              </p>
+                              <button
+                                className="directions-btn"
+                                onClick={() =>
+                                  handleSend(
+                                    `Get directions to ${place.name} at ${place.address}`,
+                                  )
+                                }
+                              >
+                                🧭 Get Directions
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Display map data if present on this message */}
+                      {!msg.isUser && msg.mapData && (
+                        <div className="message-wrapper bot inline-map-wrapper">
+                          <div className="message-avatar bot">🗺️</div>
+                          <div className="message-bubble map-bubble">
+                            <h4>Directions to {msg.mapData.destination}</h4>
+                            <iframe
+                              width="100%"
+                              height="250"
+                              style={{
+                                border: 0,
+                                borderRadius: "8px",
+                                marginTop: "12px",
+                              }}
+                              loading="lazy"
+                              allowFullScreen
+                              src={`https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(msg.mapData.dest_lon) - 0.02}%2C${parseFloat(msg.mapData.dest_lat) - 0.02}%2C${parseFloat(msg.mapData.dest_lon) + 0.02}%2C${parseFloat(msg.mapData.dest_lat) + 0.02}&layer=mapnik&marker=${msg.mapData.dest_lat}%2C${msg.mapData.dest_lon}`}
+                            ></iframe>
+                            <div style={{ marginTop: "12px", textAlign: "center" }}>
+                              <a
+                                href={`https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${msg.mapData.origin_lat}%2C${msg.mapData.origin_lon}%3B${msg.mapData.dest_lat}%2C${msg.mapData.dest_lon}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: "inline-block",
+                                  background: "#3b82f6",
+                                  color: "white",
+                                  padding: "8px 16px",
+                                  borderRadius: "20px",
+                                  textDecoration: "none",
+                                  fontWeight: "600",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                📍 View Full Route on OSM ↗
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
-
-                  {mapData && (
-                    <div className="message-wrapper bot">
-                      <div className="message-avatar bot">🗺️</div>
-                      <div className="message-bubble map-bubble">
-                        <h4>Directions to {mapData.destination}</h4>
-                        <iframe
-                          width="100%"
-                          height="250"
-                          style={{
-                            border: 0,
-                            borderRadius: "8px",
-                            marginTop: "12px",
-                          }}
-                          loading="lazy"
-                          allowFullScreen
-                          src={`https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(mapData.dest_lon) - 0.02}%2C${parseFloat(mapData.dest_lat) - 0.02}%2C${parseFloat(mapData.dest_lon) + 0.02}%2C${parseFloat(mapData.dest_lat) + 0.02}&layer=mapnik&marker=${mapData.dest_lat}%2C${mapData.dest_lon}`}
-                        ></iframe>
-                        <div style={{ marginTop: "12px", textAlign: "center" }}>
-                          <a
-                            href={`https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${mapData.origin_lat}%2C${mapData.origin_lon}%3B${mapData.dest_lat}%2C${mapData.dest_lon}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                              display: "inline-block",
-                              background: "#3b82f6",
-                              color: "white",
-                              padding: "8px 16px",
-                              borderRadius: "20px",
-                              textDecoration: "none",
-                              fontWeight: "600",
-                              fontSize: "0.9rem",
-                            }}
-                          >
-                            📍 View Full Route on OSM ↗
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  )}
 
                   {isLoading && (
                     <div className="message-wrapper bot">

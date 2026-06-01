@@ -969,3 +969,109 @@ body {
 .dark .directions-btn:hover {
   background: rgba(15, 23, 42, 0.8);
 }
+
+/* -----------------------------
+   Booking Confirmation Card
+----------------------------- */
+.booking-confirm-card {
+  align-self: flex-start;
+  margin-left: 56px; /* Align with the bot bubble (avatar is 40px + gap 16px) */
+  margin-top: 8px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #bbf7d0;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.booking-confirm-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(187, 247, 208, 0.6);
+  padding-bottom: 12px;
+}
+
+.confirm-icon {
+  font-size: 1.5rem;
+}
+
+.confirm-header-text h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #14532d;
+  font-weight: 700;
+}
+
+.booking-confirm-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.confirm-row .label {
+  color: #166534;
+  font-weight: 500;
+}
+
+.confirm-row .val {
+  color: #14532d;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Dark Mode Overrides for Booking Confirm Card */
+.dark .booking-confirm-card {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.3) 0%, rgba(6, 95, 70, 0.3) 100%);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .confirm-header-text h4 {
+  color: #34d399;
+}
+
+.dark .confirm-row .label {
+  color: #a7f3d0;
+}
+
+.dark .confirm-row .val {
+  color: #34d399;
+}
+
+.dark .booking-confirm-header {
+  border-bottom: 1px solid rgba(52, 211, 153, 0.1);
+}
+
+/* -----------------------------
+   Inline Map Wrapper Alignment
+----------------------------- */
+.inline-map-wrapper {
+  align-self: flex-start !important;
+  margin-top: 8px;
+}
+
+.inline-map-wrapper .map-bubble {
+  border-top-left-radius: 4px !important;
+}
+
